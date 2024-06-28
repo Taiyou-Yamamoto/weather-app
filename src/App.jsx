@@ -1,22 +1,22 @@
 import React, { useEffect }from 'react';
 import './App.css';
-import { fetchPrefectures } from './API/geo&weather-api.js';
-import Weather from "./Weather";
+import { getAllPrefectures } from './API/geo&weather-api.js';
+import Weather from "./Weather/Weather";
+import Navbar from "./Navbar/Navbar";
+
 
 
 
 function App() {
   useEffect(() => {
-    fetchPrefectures();
+    getAllPrefectures();
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Weather</h1>
-      </header>
-      <body><Weather /></body>
-    </div>
+    <>
+      <Navbar/>
+      <Weather />
+    </>
   );
 }
 
