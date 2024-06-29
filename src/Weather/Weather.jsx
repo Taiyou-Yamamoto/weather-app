@@ -4,11 +4,7 @@ import Current from "./Current/Current"
 import Weekly from "./Weekly/Weekly"
 
 const Weather = () => {
-    
-    getAllPrefectures();
 
-    const address = '東京都八王子'
-    getLatAndLon(address);
     return (
         <>
             <Current/>
