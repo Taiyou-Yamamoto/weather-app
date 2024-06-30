@@ -1,7 +1,7 @@
 /* api keys */
 const WEATHER_API_KEY = '91d22dc332a4b066cdd03ba5d6729121';
 //geoは緯度と経度   rasesは都道府県と市町村の獲得
-const GEOCODING_API_KEY = 'AIzaSyBcZNaoi8vo01m2cFEpOjEC7ra1lXNnrtU';
+// const GEOCODING_API_KEY = 'AIzaSyBcZNaoi8vo01m2cFEpOjEC7ra1lXNnrtU';
 const RASES_API_KEY = '1tmrcijtsjNw53VVfGAkkpatfuMac4E9JS4LbF1L';
 
 
