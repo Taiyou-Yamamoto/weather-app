@@ -1,0 +1,35 @@
+.select-box{
+    display: flex;
+    justify-content: center;
+    padding: 4%;
+}
+
+.prefectures {
+    color:white;
+    font-weight: bold;
+    font-size: 1rem;
+    height: 50px;
+    width: 100px; 
+    margin: 10px;
+}
+.cities{
+    color:white;
+    font-weight: bold;
+    font-size: 1rem;
+    height: 50px;
+    width: 100px; 
+    margin: 10px;
+}
+.select-box select {
+	position: relative;
+	width: 20%;
+	padding: 10px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: 1px solid #999;
+	background: #eee;
+	background: -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
+	background: linear-gradient(to bottom, #84bbe3 0%,#5f91c3 100%);
+    border-radius: 4%;
+}
