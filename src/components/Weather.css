@@ -1,6 +1,8 @@
 .weather {
     background-color: rgba(249, 247, 244, 0.3);
-    display
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 70%;
     height: 50vh;
     border-radius: 5%;
