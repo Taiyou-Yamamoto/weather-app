@@ -16,12 +16,12 @@ const Search = ({
 
     const found = results.find((result) => result.prefName === prefectureName);
     setCity(found.prefCode);
+    setSelectedCity('');
   };
 
   const changeSelectedCity = (e) => {
     const cityName = e.target.value;
     setSelectedCity(cityName);
-    // setSelectedCity('');
   };
 
   return (

@@ -11,7 +11,7 @@ function App() {
   const [city, setCity] = useState(13);
   // citiesは各都道府県の市町村一覧
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState('千代田区');
+  const [selectedCity, setSelectedCity] = useState('');
 
   const [lat, setLat] = useState('35.6828387');
   const [lon, setLon] = useState('139.7594549');
@@ -102,9 +102,6 @@ function App() {
     setCities(res.result);
   };
   // 市町村のリセット
-  const resetCityName = () => {
-    setSelectedCity(cities[0].cityName);
-  };
 
   // const response = ()await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${prefecture},日本&key=${GOOGLE_API_KEY}`);
 
@@ -117,10 +114,6 @@ function App() {
   useEffect(() => {
     loadCity();
   }, [city]);
-
-  useEffect(() => {
-    resetCityName();
-  }, [prefecture]);
 
   return (
     <div className="weather_app">
