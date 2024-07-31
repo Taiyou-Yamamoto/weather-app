@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-// import { getAllPrefectures, getLatAndLon } from './API/geo&weather-api.js';
+// import { getAllPrefectures, getLatAndlng } from './API/geo&weather-api.js';
 import Weather from './components/Weather';
 import Search from './components/Search';
 
@@ -14,7 +14,7 @@ function App() {
   const [selectedCity, setSelectedCity] = useState('');
 
   const [lat, setLat] = useState('35.6828387');
-  const [lon, setLon] = useState('139.7594549');
+  const [lng, setLng] = useState('139.7594549');
 
   const [results, setResults] = useState([]);
   const WEATHER_API_KEY = '91d22dc332a4b066cdd03ba5d6729121';
@@ -25,7 +25,7 @@ function App() {
   const fetchWeather = () => {
     return new Promise((resolve, reject) => {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
       )
         .then((res) => res.json())
         .then((data) => resolve(data));
@@ -81,16 +81,18 @@ function App() {
     setCities(res.result);
   };
   // 指定した住所の緯度経度の取得
-  const getLat_Lon = async (address) => {
+  const getLat_lng = async (address) => {
     const res = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address},日本&key=${GOOGLE_API_KEY}`
     );
 
     const data = await res.json();
     if (data.status === 'OK' && data.results.length > 0) {
-      const { lat, lon } = data.results[0].geometry.location;
+      const { lat, lng } = data.results[0].geometry.location;
+      console.log('Latitude:', lat);
+      console.log('lnggitude:', lng);
       setLat(lat);
-      setLon(lon);
+      setLng(lng);
     }
   };
 
@@ -103,21 +105,28 @@ function App() {
     loadCity();
   }, [city]);
 
-  useEffect(() => {}, [lat, lon]);
+  useEffect(() => {}, [lat, lng]);
   useEffect(() => {
     if (prefecture && selectedCity) {
       const address = `${selectedCity}, ${prefecture}, 日本`;
-      getLat_Lon(address);
+      getLat_lng(address);
     } else if (prefecture && !selectedCity) {
       const address = `${prefecture}, 日本`;
-      getLat_Lon(address);
+      getLat_lng(address);
     }
   }, [prefecture, selectedCity]);
 
   useEffect(() => {
-    console.log(weather); // weather が更新されたときにログを出力
+    console.log('weather_data', weather); // weather が更新されたときにログを出力
   }, [weather]);
 
+  useEffect(() => {
+    if (lat && lng) {
+      loadWeather();
+    }
+    console.log('天気', lat);
+    console.log('天気', lng);
+  }, [lat, lng]);
   return (
     <div className="weather_app">
       <Search
