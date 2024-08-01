@@ -1,11 +1,8 @@
 .weather {
-    background-color: rgba(249, 247, 244, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70%;
-    height: 50vh;
-    border-radius: 5%;
+    padding: 4%;
+    background-color: rgb(194, 223, 248, 0.4);
+    width: 90%;
+    margin:auto 0;
 }
 
 .cityName{
