@@ -3,6 +3,7 @@ import './App.css';
 // import { getAllPrefectures, getLatAndlng } from './API/geo&weather-api.js';
 import Weather from './components/Weather';
 import Search from './components/Search';
+import Weekly from './components/Weekly';
 
 function App() {
   // 天気情報
@@ -155,6 +156,7 @@ function App() {
         icon={icon}
         main={main}
       />
+      <Weekly />
     </div>
   );
 }

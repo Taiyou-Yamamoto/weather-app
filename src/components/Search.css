@@ -1,9 +1,11 @@
 .select-box{
+    display: flex;
+    justify-content: center; 
     width: 100%;
-    justify-content: center;
-    padding-top: 2%;
-    margin: auto 0;
+    position: relative; 
+    top: 13%; 
 }
+
 
 .prefectures {
     color:white;
@@ -32,5 +34,5 @@
 	background: #eee;
 	background: -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
 	background: linear-gradient(to bottom, #84bbe3 0%,#5f91c3 100%);
-    border-radius: 4%;
+    border-radius: 7px;
 }
