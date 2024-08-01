@@ -5,11 +5,13 @@ import Weather from './components/Weather';
 import Search from './components/Search';
 
 function App() {
+  // 天気情報
   const [weather, setWeather] = useState('');
-  const [prefecture, setPrefecture] = useState('東京都');
-  // cityはprefCode
-  const [city, setCity] = useState(13);
-  // citiesは各都道府県の市町村一覧
+  const [icon, setIcon] = useState('');
+  const [main, setMain] = useState('');
+  //位置情報
+  const [prefecture, setPrefecture] = useState('東京都'); // cityはprefCode
+  const [city, setCity] = useState(13); // citiesは各都道府県の市町村一覧
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
 
@@ -35,7 +37,14 @@ function App() {
   const loadWeather = async () => {
     const res = await fetchWeather();
     setWeather(res);
+    const icon = res.weather[0].icon;
+    const weather_main = res.weather[0].main;
+    setIcon(icon);
+    setMain(weather_main);
+    // console.log('res', res);
   };
+
+  // const loadIcon = () => {};
 
   /* 都道府県を取得*/
   const fetchPrefecture = () => {
@@ -105,7 +114,7 @@ function App() {
     loadCity();
   }, [city]);
 
-  useEffect(() => {}, [lat, lng]);
+  // useEffect(() => {}, [lat, lng]);
   useEffect(() => {
     if (prefecture && selectedCity) {
       const address = `${selectedCity}, ${prefecture}, 日本`;
@@ -123,9 +132,10 @@ function App() {
   useEffect(() => {
     if (lat && lng) {
       loadWeather();
+      // loadIcon();
     }
-    console.log('天気', lat);
-    console.log('天気', lng);
+    // console.log('天気', lat);
+    // console.log('天気', lng);
   }, [lat, lng]);
   return (
     <div className="weather_app">
@@ -139,7 +149,12 @@ function App() {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
       />
-      <Weather prefecture={prefecture} selectedCity={selectedCity} />
+      <Weather
+        prefecture={prefecture}
+        selectedCity={selectedCity}
+        icon={icon}
+        main={main}
+      />
     </div>
   );
 }
