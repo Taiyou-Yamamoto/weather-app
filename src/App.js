@@ -28,7 +28,7 @@ function App() {
   const fetchWeather = () => {
     return new Promise((resolve, reject) => {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
       )
         .then((res) => res.json())
         .then((data) => resolve(data));
@@ -37,15 +37,13 @@ function App() {
 
   const loadWeather = async () => {
     const res = await fetchWeather();
-    setWeather(res);
-    const icon = res.weather[0].icon;
-    const weather_main = res.weather[0].main;
-    setIcon(icon);
-    setMain(weather_main);
-    // console.log('res', res);
+    // setWeather(res);
+    // const icon = res.weather[0].icon;
+    // const weather_main = res.weather[0].main;
+    // setIcon(icon);
+    // setMain(weather_main);
+    console.log('res', res);
   };
-
-  // const loadIcon = () => {};
 
   /* 都道府県を取得*/
   const fetchPrefecture = () => {
@@ -115,7 +113,6 @@ function App() {
     loadCity();
   }, [city]);
 
-  // useEffect(() => {}, [lat, lng]);
   useEffect(() => {
     if (prefecture && selectedCity) {
       const address = `${selectedCity}, ${prefecture}, 日本`;
