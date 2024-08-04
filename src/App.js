@@ -25,18 +25,18 @@ function App() {
   const GOOGLE_API_KEY = 'AIzaSyDfZFLN7K7NX5ee8ZYekYPLpUdzr7bQVBs';
 
   /*天気情報を取得*/
-  const fetchWeather = () => {
+  const fetchCurrentWeather = () => {
     return new Promise((resolve, reject) => {
       fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
       )
         .then((res) => res.json())
         .then((data) => resolve(data));
     });
   };
 
-  const loadWeather = async () => {
-    const res = await fetchWeather();
+  const loadCurrentWeather = async () => {
+    const res = await fetchCurrentWeather();
     // setWeather(res);
     // const icon = res.weather[0].icon;
     // const weather_main = res.weather[0].main;
@@ -106,7 +106,7 @@ function App() {
 
   useEffect(() => {
     loadJp();
-    loadWeather();
+    loadCurrentWeather();
   }, []);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function App() {
 
   useEffect(() => {
     if (lat && lng) {
-      loadWeather();
+      loadCurrentWeather();
       // loadIcon();
     }
     // console.log('天気', lat);
