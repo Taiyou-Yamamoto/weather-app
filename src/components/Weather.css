@@ -18,18 +18,31 @@
   margin: 0%;
   font-size: 1.4em;
 }
-.weather .local h1 .cityName {
+.weather .local .cityName {
   padding-left: 5%;
 }
 .weather .today {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100;
+  height: 90%;
 }
 .weather .today .current_weather img {
-  height: 10%;
-  width: 10%;
+  height: 100px;
+  width: 100px;
 }
-.weather .today .current_temp span {
+.weather .today .current_weather p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0px;
+}
+.weather .today .current_temp .temps h1 {
+  font-weight: bold;
+}
+.weather .today .current_temp .temps span {
   font-size: 0.4em;
   writing-mode: vertical-rl;
 }/*# sourceMappingURL=Weather.css.map */

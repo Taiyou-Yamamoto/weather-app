@@ -22,12 +22,14 @@ const Weather = ({ lat, lon, prefecture, selectedCity, icon, main }) => {
 
         <div className="current_temp">
           <h1>36°</h1>
-          <h2>
-            <span>最高</span> 34°
-          </h2>
-          <h2>
-            <span>最低</span> 34°
-          </h2>
+          <div className="temps">
+            <h2>
+              <span>最高</span> 34°
+            </h2>
+            <h2>
+              <span>最低</span> 34°
+            </h2>
+          </div>
         </div>
 
         <div className="others">
