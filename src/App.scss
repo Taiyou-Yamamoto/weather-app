@@ -1,0 +1,11 @@
+.weather_app {
+    display: grid; 
+    grid-template-columns: 1fr; /* 1列だけを作成し、幅を100%に設定 */
+    grid-template-rows: 0.5fr 2.4fr 2fr; /* 必要に応じて行の高さを設定 */
+    align-items: center;
+    justify-items: center; /* アイテムをグリッドセル内で水平に中央揃え */
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-image: url('./clear image.jpg');
+  }
