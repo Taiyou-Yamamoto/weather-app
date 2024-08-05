@@ -8,8 +8,15 @@ import Weekly from './components/Weekly';
 function App() {
   // 天気情報
   const [weather, setWeather] = useState('');
-  const [icon, setIcon] = useState('');
+  const [temp, setTemp] = useState('');
+  const [max, setMax] = useState('');
+  const [min, setMin] = useState('');
+  const [humidity, setHumidity] = useState('');
+  const [rain, setRain] = useState('');
   const [main, setMain] = useState('');
+  const [sunrise, setSunrise] = useState('');
+  const [sunset, setSunset] = useState('');
+
   //位置情報
   const [prefecture, setPrefecture] = useState('東京都'); // cityはprefCode
   const [city, setCity] = useState(13); // citiesは各都道府県の市町村一覧
@@ -37,9 +44,55 @@ function App() {
 
   const loadCurrentWeather = async () => {
     const res = await fetchCurrentWeather();
+    // 天気をセット
+    setWeather(res.weather[0].description);
 
-    console.log('res', res);
+    // 現在気温
+    const current_temp = res.main.temp - 273.15;
+    setTemp(Math.round(current_temp));
 
+    // 最高気温
+    const current_max_temp = res.main.temp_max - 273.15;
+    setMax(Math.round(current_max_temp));
+
+    // 最低気温
+    const current_min_temp = res.main.temp_min - 273.15;
+    setMin(Math.round(current_min_temp));
+
+    //湿度
+    const humidity = res.main.humidity;
+    setHumidity(humidity);
+
+    // 降水
+    let rain = res.rain ? res.rain['1h'] : 'データなし';
+    if (typeof rain === 'number') {
+      rain = Math.floor(rain) + 'mm';
+      setRain(rain);
+    } else {
+      setRain(rain);
+    }
+
+    // 日の入り
+    const unixSunrise = res.sys.sunrise;
+    const sunrise_time = new Date(unixSunrise * 1000);
+    const sunriseHours = sunrise_time.getHours();
+    const sunriseMinutes = sunrise_time.getMinutes();
+    const sunriseHM = `${sunriseHours}:${
+      sunriseMinutes < 10 ? '0' : ''
+    }${sunriseMinutes}`;
+
+    setSunrise(sunriseHM);
+    //日没
+
+    const unixSunset = res.sys.sunset;
+    const sunset_time = new Date(unixSunset * 1000);
+    const sunsetHours = sunset_time.getHours();
+    const sunsetMinutes = sunset_time.getMinutes();
+    const sunsetHM = `${sunsetHours}:${
+      sunsetMinutes < 10 ? '0' : ''
+    }${sunsetMinutes}`;
+    setSunset(sunsetHM);
+    console.log('res', sunrise);
   };
 
   /* 都道府県を取得*/
@@ -108,7 +161,12 @@ function App() {
 
   useEffect(() => {
     loadCity();
+    loadCurrentWeather();
   }, [city]);
+
+  // useEffect(() => {
+
+  // }, [temp, max, min]);
 
   useEffect(() => {
     if (prefecture && selectedCity) {
@@ -129,8 +187,6 @@ function App() {
       loadCurrentWeather();
       // loadIcon();
     }
-    // console.log('天気', lat);
-    // console.log('天気', lng);
   }, [lat, lng]);
   return (
     <div className="weather_app">
@@ -147,8 +203,16 @@ function App() {
       <Weather
         prefecture={prefecture}
         selectedCity={selectedCity}
-        icon={icon}
+        temp={temp}
         main={main}
+        weather={weather}
+        a
+        max={max}
+        min={min}
+        humidity={humidity}
+        rain={rain}
+        sunrise={sunrise}
+        sunset={sunset}
       />
       <Weekly />
     </div>

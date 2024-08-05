@@ -1,7 +1,22 @@
 import React from 'react';
 import './Weather.css';
 
-const Weather = ({ lat, lon, prefecture, selectedCity, icon, main }) => {
+const Weather = ({
+  lat,
+  lon,
+  prefecture,
+  selectedCity,
+  weather,
+  temp,
+  max,
+  min,
+  humidity,
+  rain,
+  sunrise,
+  sunset,
+  icon,
+  main,
+}) => {
   return (
     <div className="weather">
       <div className="local">
@@ -17,39 +32,39 @@ const Weather = ({ lat, lon, prefecture, selectedCity, icon, main }) => {
             // src={`http://openweathermap.org/img/wn/01d@2x.png`}
             alt="Weather Icon"
           ></img>
-          <p>晴れ</p>
+          <p>{weather}</p>
         </div>
 
         <div className="current_temp">
-          <h1>36°</h1>
+          <h1>{temp}°</h1>
           <div className="temps">
             <h2>
-              <span>最高</span> 34°
+              <span>最高</span>
+              {max}°
             </h2>
             <h2>
-              <span>最低</span> 34°
+              <span>最低</span>
+              {min}°
             </h2>
           </div>
         </div>
 
         <div className="others">
-
           <div className="hum_rain">
-            <div className="humidity">湿度: 70%</div>
-            <div className="rain_1h">降水: 3mm</div>
+            <div className="humidity">湿度: {humidity}%</div>
+            <div className="rain_1h">降水: {rain}</div>
           </div>
 
           <div className="sun_data">
             <div className="sunrise_data">
               <div className="sunrise">日の出</div>
-              <div className="sunriseTime">6:00</div>
+              <div className="sunriseTime">{sunrise}</div>
             </div>
             <div className="sunset_data">
               <div className="sunset">日没</div>
-              <div className="sunsetTime">17:00</div>
+              <div className="sunsetTime">{sunset}</div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
