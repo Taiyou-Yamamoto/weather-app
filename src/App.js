@@ -13,7 +13,7 @@ function App() {
   const [min, setMin] = useState('');
   const [humidity, setHumidity] = useState('');
   const [rain, setRain] = useState('');
-  const [main, setMain] = useState('');
+  const [icon, setIcon] = useState('');
   const [sunrise, setSunrise] = useState('');
   const [sunset, setSunset] = useState('');
 
@@ -45,7 +45,78 @@ function App() {
   const loadCurrentWeather = async () => {
     const res = await fetchCurrentWeather();
     // 天気をセット
-    setWeather(res.weather[0].description);
+    switch (res.weather[0].description) {
+      case 'clear sky':
+        setWeather('快晴');
+        setIcon('/Icons/100.svg');
+        break;
+      case 'few clouds' || 'scattered clouds':
+        setWeather('晴れ');
+        setIcon('/Icons/100.svg');
+        break;
+      case 'broken clouds' || 'overcast clouds':
+        setWeather('曇り');
+        setIcon('/Icons/200.svg');
+        break;
+      case 'light rain' || 'moderate rain':
+        setWeather('雨');
+        setIcon('/Icons/300.svg');
+        break;
+      case 'heavy rain' || 'very heavy rain' || 'extreme rain':
+        setWeather('強い雨');
+        setIcon('/Icons/300.svg');
+        break;
+      case 'freezing rain':
+        setWeather('氷雨');
+        setIcon('/Icons/300.svg');
+        break;
+      case 'light snow' || 'moderate snow':
+        setWeather('雪');
+        setIcon('/Icons/400.svg');
+        break;
+      case 'heavy snow' || 'very heavy snow' || 'extreme snow':
+        setWeather('大雪');
+        setIcon('/Icons/400.svg');
+        break;
+      case 'mist':
+        setWeather('霧');
+        setIcon('');
+        break;
+      case 'smoke':
+        setWeather('煙');
+        setIcon('');
+        break;
+      case 'haze':
+        setWeather('もや');
+        setIcon('');
+        break;
+      case 'fog':
+        setWeather('深い霧');
+        setIcon('');
+        break;
+      case 'light thunderstorm' || 'thunderstorm':
+        setWeather('豪雨');
+        setIcon('/Icons/300.svg');
+        break;
+      case 'heavy thunderstorm' || 'severe thunderstorm':
+        setWeather('激しい豪雨');
+        setIcon('/Icons/300.svg');
+        break;
+      case 'tornado':
+        setWeather('竜巻');
+        setIcon('');
+        break;
+      case 'dust':
+        setWeather('塵');
+        setIcon('');
+        break;
+      case 'sand':
+        setWeather('砂');
+        setIcon('');
+        break;
+      default:
+    }
+    // setWeather(res.weather[0].description);
 
     // 現在気温
     const current_temp = res.main.temp - 273.15;
@@ -204,7 +275,7 @@ function App() {
         prefecture={prefecture}
         selectedCity={selectedCity}
         temp={temp}
-        main={main}
+        icon={icon}
         weather={weather}
         a
         max={max}

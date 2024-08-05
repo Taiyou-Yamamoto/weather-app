@@ -27,7 +27,7 @@ const Weather = ({
       <div className="today">
         <div className="current_weather">
           <img
-            src={'/Icons/100.svg'}
+            src={icon}
             // src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
             // src={`http://openweathermap.org/img/wn/01d@2x.png`}
             alt="Weather Icon"
