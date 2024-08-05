@@ -37,12 +37,9 @@ function App() {
 
   const loadCurrentWeather = async () => {
     const res = await fetchCurrentWeather();
-    // setWeather(res);
-    // const icon = res.weather[0].icon;
-    // const weather_main = res.weather[0].main;
-    // setIcon(icon);
-    // setMain(weather_main);
+
     console.log('res', res);
+
   };
 
   /* 都道府県を取得*/

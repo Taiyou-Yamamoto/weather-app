@@ -9,18 +9,27 @@
     height: 80%;
     margin-top: 2%; 
     border-radius: 20px;
+    text-shadow: 2px 2px 4px rgb(210, 209, 209);
+
+
 
     .local {
         display: flex; 
         flex-direction: row; 
-
+        align-items: flex-end;
+        justify-content: center;
+        position: relative;
+        height: 10%;
         h1 {
-            margin:0%;
+
+            margin-top:10px;
+            margin-bottom:0;
             font-size: 1.4em;
+
 
         }
         .cityName{
-            padding-left: 5%;
+            padding-left: 3%;
         }
     }
 
@@ -30,12 +39,12 @@
         justify-items : center;
         grid-template-columns: 1fr 1fr 1fr;
         width: 100;
-        height: 90%;
+        height: 80%;
 
         .current_weather{
             img{
-                height: 100px;
-                width: 100px;
+                height: 150px;
+                width: 150px;
             }
 
             p {
@@ -47,17 +56,63 @@
         }
 
         .current_temp{
+
+            text-align: center;
             .temps{
-                h1{
-                    font-weight: bold;
-                }
+                display:flex;
+                flex-direction: row;
+            }
+            
+            h1{
+                font-size: 4.5rem;
+                padding-left:20px;
+                font-weight: bold;
+                margin-bottom: 20%;
+            }
+
+            h2{
+                font-size:2.5rem;
+                margin: 0;
                 span {
-                    font-size: 0.4em;
+                    font-size: 1rem;
                     writing-mode: vertical-rl;
-                }
+            }
             }
 
         }
 
+        .others{
+            display: flex;
+            flex-direction: column; 
+            margin-top: 10%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            height: 100%;
+            justify-content: space-around;
+            align-items:  center;
+            .hum_rain{
+                .humidity{
+                    margin-bottom: 10%;
+                }
+            }
+
+            .sun_data{
+                text-align: center;
+                .sunrise{
+                    // margin-bottom: 10%;
+                }
+                .sunriseTime{
+                    margin-bottom: 20%;
+                }
+            }
+
+            .sunset_data{
+                .sunsetTime{
+                    
+                }
+            }
+        }
+        }
+
     }
-}
+

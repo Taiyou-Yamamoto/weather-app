@@ -33,7 +33,23 @@ const Weather = ({ lat, lon, prefecture, selectedCity, icon, main }) => {
         </div>
 
         <div className="others">
-          <div className="humidity">70%</div>
+
+          <div className="hum_rain">
+            <div className="humidity">湿度: 70%</div>
+            <div className="rain_1h">降水: 3mm</div>
+          </div>
+
+          <div className="sun_data">
+            <div className="sunrise_data">
+              <div className="sunrise">日の出</div>
+              <div className="sunriseTime">6:00</div>
+            </div>
+            <div className="sunset_data">
+              <div className="sunset">日没</div>
+              <div className="sunsetTime">17:00</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

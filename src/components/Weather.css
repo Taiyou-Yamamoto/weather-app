@@ -9,17 +9,23 @@
   height: 80%;
   margin-top: 2%;
   border-radius: 20px;
+  text-shadow: 2px 2px 4px rgb(210, 209, 209);
 }
 .weather .local {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  height: 10%;
 }
 .weather .local h1 {
-  margin: 0%;
+  margin-top: 10px;
+  margin-bottom: 0;
   font-size: 1.4em;
 }
 .weather .local .cityName {
-  padding-left: 5%;
+  padding-left: 3%;
 }
 .weather .today {
   display: grid;
@@ -27,11 +33,11 @@
   justify-items: center;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100;
-  height: 90%;
+  height: 80%;
 }
 .weather .today .current_weather img {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
 }
 .weather .today .current_weather p {
   font-size: 1.5rem;
@@ -39,10 +45,43 @@
   text-align: center;
   margin: 0px;
 }
-.weather .today .current_temp .temps h1 {
-  font-weight: bold;
+.weather .today .current_temp {
+  text-align: center;
 }
-.weather .today .current_temp .temps span {
-  font-size: 0.4em;
+.weather .today .current_temp .temps {
+  display: flex;
+  flex-direction: row;
+}
+.weather .today .current_temp h1 {
+  font-size: 4.5rem;
+  padding-left: 20px;
+  font-weight: bold;
+  margin-bottom: 20%;
+}
+.weather .today .current_temp h2 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+.weather .today .current_temp h2 span {
+  font-size: 1rem;
   writing-mode: vertical-rl;
+}
+.weather .today .others {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+  font-size: 1.2rem;
+  font-weight: 700;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.weather .today .others .hum_rain .humidity {
+  margin-bottom: 10%;
+}
+.weather .today .others .sun_data {
+  text-align: center;
+}
+.weather .today .others .sun_data .sunriseTime {
+  margin-bottom: 20%;
 }/*# sourceMappingURL=Weather.css.map */
