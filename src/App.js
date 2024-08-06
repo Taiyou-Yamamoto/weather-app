@@ -31,7 +31,7 @@ function App() {
   const JAPAN_PREFECTURE_API_KEY = '1tmrcijtsjNw53VVfGAkkpatfuMac4E9JS4LbF1L';
   const GOOGLE_API_KEY = 'AIzaSyDfZFLN7K7NX5ee8ZYekYPLpUdzr7bQVBs';
 
-  /*天気情報を取得*/
+  /*現在の天気情報を取得*/
   const fetchCurrentWeather = () => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -42,27 +42,42 @@ function App() {
     });
   };
 
+  // ５日間の天気情報
+
+  const loadWeeklyWeather = async () => {
+    const week = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
+    ).then((res) => res.json());
+    console.log('week', week);
+  };
+
   const loadCurrentWeather = async () => {
     const res = await fetchCurrentWeather();
+    console.log('res', res.weather[0].description);
     // 天気をセット
     switch (res.weather[0].description) {
       case 'clear sky':
         setWeather('快晴');
         setIcon('/Icons/100.svg');
         break;
-      case 'few clouds' || 'scattered clouds':
+      case 'few clouds':
+      case 'scattered clouds':
         setWeather('晴れ');
         setIcon('/Icons/100.svg');
         break;
-      case 'broken clouds' || 'overcast clouds':
+      case 'broken clouds':
+      case 'overcast clouds':
         setWeather('曇り');
         setIcon('/Icons/200.svg');
         break;
-      case 'light rain' || 'moderate rain':
+      case 'light rain':
+      case 'moderate rain':
         setWeather('雨');
         setIcon('/Icons/300.svg');
         break;
-      case 'heavy rain' || 'very heavy rain' || 'extreme rain':
+      case 'heavy rain':
+      case 'very heavy rain':
+      case 'extreme rain':
         setWeather('強い雨');
         setIcon('/Icons/300.svg');
         break;
@@ -70,11 +85,14 @@ function App() {
         setWeather('氷雨');
         setIcon('/Icons/300.svg');
         break;
-      case 'light snow' || 'moderate snow':
+      case 'light snow':
+      case 'moderate snow':
         setWeather('雪');
         setIcon('/Icons/400.svg');
         break;
-      case 'heavy snow' || 'very heavy snow' || 'extreme snow':
+      case 'heavy snow':
+      case 'very heavy snow':
+      case 'extreme snow':
         setWeather('大雪');
         setIcon('/Icons/400.svg');
         break;
@@ -94,11 +112,13 @@ function App() {
         setWeather('深い霧');
         setIcon('');
         break;
-      case 'light thunderstorm' || 'thunderstorm':
+      case 'light thunderstorm':
+      case 'thunderstorm':
         setWeather('豪雨');
         setIcon('/Icons/300.svg');
         break;
-      case 'heavy thunderstorm' || 'severe thunderstorm':
+      case 'heavy thunderstorm':
+      case 'severe thunderstorm':
         setWeather('激しい豪雨');
         setIcon('/Icons/300.svg');
         break;
@@ -116,7 +136,6 @@ function App() {
         break;
       default:
     }
-    // setWeather(res.weather[0].description);
 
     // 現在気温
     const current_temp = res.main.temp - 273.15;
@@ -151,10 +170,9 @@ function App() {
     const sunriseHM = `${sunriseHours}:${
       sunriseMinutes < 10 ? '0' : ''
     }${sunriseMinutes}`;
-
     setSunrise(sunriseHM);
-    //日没
 
+    //日没
     const unixSunset = res.sys.sunset;
     const sunset_time = new Date(unixSunset * 1000);
     const sunsetHours = sunset_time.getHours();
@@ -163,7 +181,6 @@ function App() {
       sunsetMinutes < 10 ? '0' : ''
     }${sunsetMinutes}`;
     setSunset(sunsetHM);
-    console.log('res', sunrise);
   };
 
   /* 都道府県を取得*/
@@ -219,7 +236,7 @@ function App() {
     if (data.status === 'OK' && data.results.length > 0) {
       const { lat, lng } = data.results[0].geometry.location;
       console.log('Latitude:', lat);
-      console.log('lnggitude:', lng);
+      console.log('longitude:', lng);
       setLat(lat);
       setLng(lng);
     }
@@ -228,16 +245,14 @@ function App() {
   useEffect(() => {
     loadJp();
     loadCurrentWeather();
+    loadWeeklyWeather();
   }, []);
 
   useEffect(() => {
     loadCity();
-    loadCurrentWeather();
+    // loadCurrentWeather();
+    // loadWeeklyWeather();
   }, [city]);
-
-  // useEffect(() => {
-
-  // }, [temp, max, min]);
 
   useEffect(() => {
     if (prefecture && selectedCity) {
@@ -256,7 +271,7 @@ function App() {
   useEffect(() => {
     if (lat && lng) {
       loadCurrentWeather();
-      // loadIcon();
+      loadWeeklyWeather();
     }
   }, [lat, lng]);
   return (
