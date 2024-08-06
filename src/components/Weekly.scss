@@ -1,3 +1,26 @@
 .Weekly {
-    height: 50%;
+    padding: 1%;
+
+    width: 63.5%;
+    height: 80%;
+    border-radius: 20px;
+    text-shadow: 2px 2px 4px rgb(210, 209, 209);
+    
+    .weeklyContent{
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        align-items: center;
+        justify-items: center; 
+        font-size: 1.5rem;
+        height: 100%;
+        width: 100%;
+        .Card {
+            text-align: center;
+            font-weight: 800;
+            background-color: rgb(194, 223, 248, 0.4);
+            height: 100%;
+            width: 90%;
+            border-radius: 8px;
+        }
+    }
 }
