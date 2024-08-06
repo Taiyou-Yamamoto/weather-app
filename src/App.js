@@ -16,6 +16,9 @@ function App() {
   const [icon, setIcon] = useState('');
   const [sunrise, setSunrise] = useState('');
   const [sunset, setSunset] = useState('');
+  // 週間のデータ
+  // const [object, setObject] = useState([]);
+  const [weeklyWeather, setWeeklyWeather] = useState([]);
 
   //位置情報
   const [prefecture, setPrefecture] = useState('東京都'); // cityはprefCode
@@ -45,12 +48,97 @@ function App() {
   // ５日間の天気情報
 
   const loadWeeklyWeather = async () => {
+    // 週のデータを取得
     const week = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
     ).then((res) => res.json());
-    console.log('week', week);
-  };
 
+    console.log('original', week);
+    const weeklyData = {};
+
+    week.list.forEach((item) => {
+      const dateTime = item.dt_txt;
+      const date = dateTime.split(' ')[0];
+      const newDate = new Date(date);
+      const month = newDate.getMonth() + 1;
+      const day = newDate.getDate();
+      const simpleDate = `${month}/${day}`;
+
+      const time = dateTime.split(' ')[1];
+
+      if (time.startsWith('09:00') || time.startsWith('15:00')) {
+        if (!weeklyData[simpleDate]) {
+          weeklyData[simpleDate] = {
+            '9am': null,
+            min: null,
+            '15pm': null,
+            max: null,
+          };
+        }
+        if (time.startsWith('09:00')) {
+          weeklyData[simpleDate]['9am'] = item.weather[0].main;
+          weeklyData[simpleDate]['min'] = item.main.temp_min;
+        } else if (time.startsWith('15:00')) {
+          weeklyData[simpleDate]['15pm'] = item.weather[0].main;
+          weeklyData[simpleDate]['max'] = item.main.temp_max;
+        }
+      }
+    });
+
+    const weatherSummary = Object.keys(weeklyData).map((date) => {
+      const {
+        '9am': morningWeather,
+        '15pm': afternoonWeather,
+        min,
+        max,
+      } = weeklyData[date];
+
+      let weatherDescription;
+
+      switch (true) {
+        case morningWeather === 'Clear' && afternoonWeather === 'Clear':
+          weatherDescription = '晴れ';
+          break;
+        case morningWeather === 'Clear' && afternoonWeather === 'Clouds':
+          weatherDescription = '晴れ時々曇り';
+          break;
+        case morningWeather === 'Clouds' && afternoonWeather === 'Clear':
+          weatherDescription = '曇り時々晴れ';
+          break;
+        case morningWeather === 'Clouds' && afternoonWeather === 'Clouds':
+          weatherDescription = '曇り';
+          break;
+        case morningWeather === 'Clear' && afternoonWeather === 'Rain':
+          weatherDescription = '晴れ時々雨';
+          break;
+        case morningWeather === 'Rain' && afternoonWeather === 'Clear':
+          weatherDescription = '雨のち晴れ';
+          break;
+        case morningWeather === 'Rain' && afternoonWeather === 'Rain':
+          weatherDescription = '雨';
+          break;
+        case morningWeather === 'Clouds' && afternoonWeather === 'Rain':
+          weatherDescription = '曇り時々雨';
+          break;
+        case morningWeather === 'Rain' && afternoonWeather === 'Clouds':
+          weatherDescription = '雨のち曇り';
+          break;
+        default:
+          weatherDescription = '天気情報なし';
+          break;
+      }
+
+      return {
+        date,
+        weatherDescription,
+        min,
+        max,
+      };
+    });
+
+    setWeeklyWeather(weatherSummary);
+    console.log('テスト', weeklyData);
+  };
   const loadCurrentWeather = async () => {
     const res = await fetchCurrentWeather();
     console.log('res', res.weather[0].description);
@@ -292,7 +380,6 @@ function App() {
         temp={temp}
         icon={icon}
         weather={weather}
-        a
         max={max}
         min={min}
         humidity={humidity}
@@ -300,7 +387,7 @@ function App() {
         sunrise={sunrise}
         sunset={sunset}
       />
-      <Weekly />
+      <Weekly weeklyWeather={weeklyWeather} />
     </div>
   );
 }
