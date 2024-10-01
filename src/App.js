@@ -16,16 +16,16 @@ function App() {
   const [icon, setIcon] = useState('');
   const [sunrise, setSunrise] = useState('');
   const [sunset, setSunset] = useState('');
+
   // 週間のデータ
   const [weeklyWeather, setWeeklyWeather] = useState([]);
 
   //位置情報
-  const [prefecture, setPrefecture] = useState('東京都'); // cityはprefCode
+  const [prefecture, setPrefecture] = useState('東京都'); 
   const [prefecturesList, setPrefecturesList] = useState([]);
-  const [city, setCity] = useState(13); // citiesは各都道府県の市町村一覧
+  const [cityCode, setCityCode] = useState(13); 
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
-
   const [lat, setLat] = useState('35.6828387');
   const [lng, setLng] = useState('139.7594549');
 
@@ -264,8 +264,8 @@ function App() {
 
 
   // 市町村のリストをセット
-  const loadCityList = async (city) => {
-    let res = await fetchCities(city);
+  const loadCityList = async (cityCode) => {
+    let res = await fetchCities(cityCode);
     console.log('Fetched City Data:', res.result);
     setCityList(res.result);
   };
@@ -302,8 +302,8 @@ function App() {
 
   // 市町村リストが変わった時の処理
   useEffect(() => {
-    loadCityList(city);
-  }, [city]);
+    loadCityList(cityCode);
+  }, [cityCode]);
 
   // 座標が変わった時の処理
   useEffect(() => {
@@ -328,9 +328,9 @@ function App() {
       <Search
         prefecturesList={prefecturesList}
         setPrefecture={setPrefecture}
-        setCity={setCity}
+        setCityCode={setCityCode}
         prefecture={prefecture}
-        city={city}
+        cityCode={cityCode}
         cityList={cityList}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
