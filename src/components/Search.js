@@ -4,7 +4,7 @@ import './Search.css';
 const Search = ({
   prefecturesList,
   setPrefecture,
-  setCity,
+  setCityCode,
   prefecture,
   cityList,
   selectedCity,
@@ -15,7 +15,7 @@ const Search = ({
     setPrefecture(prefectureName);
 
     const found = prefecturesList.find((result) => result.prefName === prefectureName);
-    setCity(found.prefCode);
+    setCityCode(found.prefCode);
     setSelectedCity('');
   };
 
