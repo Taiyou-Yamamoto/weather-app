@@ -40,11 +40,12 @@ const GOOGLE_API_KEY = 'AIzaSyDfZFLN7K7NX5ee8ZYekYPLpUdzr7bQVBs';
             });
         };
 
-        export const fetchCities = (city) => {
+    // 都道府県の市町村を取得
+        export const fetchCities = (cityCode) => {
             return new Promise((resolve, reject) => {
-            if (city) {
+            if (cityCode) {
                 fetch(
-                `https://opendata.resas-portal.go.jp/api/v1/cities?prefCode=${city}`,
+                `https://opendata.resas-portal.go.jp/api/v1/cities?prefCode=${cityCode}`,
                 {
                     method: 'GET',
                     headers: {
@@ -58,14 +59,13 @@ const GOOGLE_API_KEY = 'AIzaSyDfZFLN7K7NX5ee8ZYekYPLpUdzr7bQVBs';
             });
         };
 
-        // 指定した住所の緯度経度の取得
-
-    export const fetchCoordinatesFromAddress = (address) => {
-        return new Promise((resolve, reject) => {
-        fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${address},日本&key=${GOOGLE_API_KEY}`
-        )
-            .then((res) => res.json())
-            .then((data) => resolve(data));
-        });
-    };
+    // 指定した住所の緯度経度の取得
+        export const fetchCoordinatesFromAddress = (address) => {
+            return new Promise((resolve, reject) => {
+            fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${address},日本&key=${GOOGLE_API_KEY}`
+            )
+                .then((res) => res.json())
+                .then((data) => resolve(data));
+            });
+        };
