@@ -17,7 +17,7 @@
   background: linear-gradient(to bottom, #84bbe3 0%, #5f91c3 100%);
   border-radius: 7px;
 }
-.select-box .prefectures {
+.select-box select.prefectures {
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -25,7 +25,7 @@
   width: 200px;
   margin: 10px;
 }
-.select-box .cities {
+.select-box select.cityList {
   color: white;
   font-weight: bold;
   font-size: 1rem;
