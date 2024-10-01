@@ -25,6 +25,10 @@
 .Weekly .weeklyContent .Card .date {
   margin: 3%;
 }
+.Weekly .weeklyContent .Card img {
+  height: 40%;
+  width: 70%;
+}
 .Weekly .weeklyContent .Card .weatherDescription {
   margin: 3%;
 }/*# sourceMappingURL=Weekly.css.map */

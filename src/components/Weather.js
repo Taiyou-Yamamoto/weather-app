@@ -26,7 +26,7 @@ const Weather = ({
 
       <div className="today">
         <div className="current_weather">
-          <img src={icon} alt="Weather Icon"></img>
+          <img src={icon} alt=" "></img>
           <p>{weather}</p>
         </div>
 

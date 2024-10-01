@@ -35,15 +35,17 @@ const Card = ({ day }) => {
         setIcon(''); // 天気情報なしのアイコンを設定
         break;
     }
-    console.log('ええ', day.weatherDescription);
+    console.log( day.weatherDescription);
   }, [day.weatherDescription]);
   return (
     <div className="Card">
       <div className="date">{day.date}</div>
       <div className="icon"></div>
-      <img src={icon} alt="Weather Icon" />
+      <img src={icon} alt=" " />
       <div className="weatherDescription">{day.weatherDescription}</div>
-      <div className="min">{Math.round(day.min - 273.15)}°/ {Math.round(day.max - 273.15)}°</div>
+      <div className="min">
+        {Math.round(day.min - 273.15)}°/ {Math.round(day.max - 273.15)}°
+      </div>
     </div>
   );
 };

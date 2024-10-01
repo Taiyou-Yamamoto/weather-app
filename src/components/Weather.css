@@ -38,6 +38,9 @@
   height: 150px;
   width: 150px;
 }
+.weather .today .current_weather img:not([src]) {
+  display: none;
+}
 .weather .today .current_weather p {
   font-size: 1.5rem;
   font-weight: bold;
