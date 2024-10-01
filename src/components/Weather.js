@@ -2,8 +2,6 @@ import React from 'react';
 import './Weather.css';
 
 const Weather = ({
-  lat,
-  lon,
   prefecture,
   selectedCity,
   weather,
@@ -15,7 +13,6 @@ const Weather = ({
   sunrise,
   sunset,
   icon,
-  main,
 }) => {
   return (
     <div className="weather">
