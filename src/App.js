@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-// import { getAllPrefectures, getLatAndlng } from './API/geo&weather-api.js';
+import { fetchCurrentWeather, fetchFiveDaysWeatherDate, fetchPrefecture, fetchCities, fetchCoordinatesFromAddress } from './API/apis';
 import Weather from './components/Weather';
 import Search from './components/Search';
 import Weekly from './components/Weekly';
@@ -17,11 +17,11 @@ function App() {
   const [sunrise, setSunrise] = useState('');
   const [sunset, setSunset] = useState('');
   // 週間のデータ
-  // const [object, setObject] = useState([]);
   const [weeklyWeather, setWeeklyWeather] = useState([]);
 
   //位置情報
   const [prefecture, setPrefecture] = useState('東京都'); // cityはprefCode
+  const [prefecturesList, setPrefecturesList] = useState([]);
   const [city, setCity] = useState(13); // citiesは各都道府県の市町村一覧
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
@@ -29,36 +29,10 @@ function App() {
   const [lat, setLat] = useState('35.6828387');
   const [lng, setLng] = useState('139.7594549');
 
-  const [prefecturesList, setPrefecturesList] = useState([]);
-  const WEATHER_API_KEY = '91d22dc332a4b066cdd03ba5d6729121';
-  const JAPAN_PREFECTURE_API_KEY = '1tmrcijtsjNw53VVfGAkkpatfuMac4E9JS4LbF1L';
-  const GOOGLE_API_KEY = 'AIzaSyDfZFLN7K7NX5ee8ZYekYPLpUdzr7bQVBs';
-
-  /*現在の天気情報をAPIより取得*/
-  const fetchCurrentWeather = () => {
-    return new Promise((resolve, reject) => {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((data) => resolve(data));
-    });
-  };
-
-  // ５日間の天気情報APIより取得
-  const fetchFiveDaysWeatherDate = () => {
-    return new Promise((resolve, reject) => {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${WEATHER_API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((data) => resolve(data));
-    });
-  };
-
-  const loadWeeklyWeather = async () => {
+  
+  const loadWeeklyWeather = async (lat, lng) => {
     // 5日間の天気のデータのレスポンスを取得
-    const FiveDaysWeatherResponse = await fetchFiveDaysWeatherDate();
+    const FiveDaysWeatherResponse = await fetchFiveDaysWeatherDate(lat, lng);
 
     console.log('5DaysWeatherResponse', FiveDaysWeatherResponse);
     const FiveDaysDataList = {};
@@ -148,8 +122,8 @@ function App() {
     console.log('weatherSummary', weatherSummary);
   };
   
-  const loadCurrentWeatherDate = async () => {
-    const res = await fetchCurrentWeather();
+  const loadCurrentWeatherDate = async (lat, lng) => {
+    const res = await fetchCurrentWeather(lat, lng);
     console.log('res', res.weather[0].description);
     // 天気をセット
     switch (res.weather[0].description) {
@@ -280,19 +254,6 @@ function App() {
     setSunset(sunsetHM);
   };
 
-  /* 都道府県を取得*/
-  const fetchPrefecture = () => {
-    return new Promise((resolve, reject) => {
-      fetch(`https://opendata.resas-portal.go.jp/api/v1/prefectures`, {
-        method: 'GET',
-        headers: {
-          'X-API-KEY': `${JAPAN_PREFECTURE_API_KEY}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => resolve(data));
-    });
-  };
 
   const loadPrefectureList = async () => {
     let res = await fetchPrefecture();
@@ -300,51 +261,19 @@ function App() {
     console.log('loadPrefectureList',res.result)
   };
 
-  /** 市町村を取得 */
-  const fetchCities = () => {
-    return new Promise((resolve, reject) => {
-      if (city) {
-        fetch(
-          `https://opendata.resas-portal.go.jp/api/v1/cities?prefCode=${city}`,
-          {
-            method: 'GET',
-            headers: {
-              'X-API-KEY': `${JAPAN_PREFECTURE_API_KEY}`,
-            },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => resolve(data));
-      }
-    });
-  };
+
 
   // 市町村のリストをセット
-  const loadCityList = async () => {
-    let res = await fetchCities();
+  const loadCityList = async (city) => {
+    let res = await fetchCities(city);
     console.log('Fetched City Data:', res.result);
     setCityList(res.result);
   };
-  // 指定した住所の緯度経度の取得
-
-  const fetchCoordinatesFromAddress = (address) => {
-    return new Promise((resolve, reject) => {
-      fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${address},日本&key=${GOOGLE_API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((data) => resolve(data));
-    });
-  };
 
 
-  // const fetchCoordinatesFromAddress = async (address) => {
-  //   const res = await fetch(
-  //     `https://maps.googleapis.com/maps/api/geocode/json?address=${address},日本&key=${GOOGLE_API_KEY}`
-  //   );
   const loadCoordinates = async (address) => {
     if (!address) {
-      console.error('Address is undefined');
+      console.error('アドレスが設定されていない');
       return;
     }
   
@@ -357,44 +286,43 @@ function App() {
         setLat(lat);
         setLng(lng);
       } else {
-        console.error('Invalid data:', data);
+        console.error('正しいデータが取れていない', data);
       }
     } catch (error) {
-      console.error('Error loading coordinates:', error);
+      console.error('コードに問題あり', error);
     }
   };
 
+  // 初回マウント時
   useEffect(() => {
-    loadPrefectureList();
-    loadCurrentWeatherDate();
-    loadWeeklyWeather();
+    loadPrefectureList(lat, lng);
+    loadCurrentWeatherDate(lat, lng);
+    loadWeeklyWeather(lat, lng);
   }, []);
 
+  // 市町村リストが変わった時の処理
   useEffect(() => {
-    loadCityList();
+    loadCityList(city);
   }, [city]);
 
-  useEffect(() => {
-    if (prefecture && selectedCity) {
-      const address = `${selectedCity}, ${prefecture}, 日本`;
-      loadCoordinates(address);
-    } else if (prefecture && !selectedCity) {
-      const address = `${prefecture}, 日本`;
-      loadCoordinates(address);
-    }
-  }, [prefecture, selectedCity]);
-  
-
-  useEffect(() => {
-    console.log('weather_data', weather); // weather が更新されたときにログを出力
-  }, [weather]);
-
+  // 座標が変わった時の処理
   useEffect(() => {
     if (lat && lng) {
-      loadCurrentWeatherDate();
-      loadWeeklyWeather();
+      loadCurrentWeatherDate(lat, lng);
+      loadWeeklyWeather(lat, lng);
     }
   }, [lat, lng]);
+
+    // 都道府県や市町村が選ばれた時の座標取得
+    useEffect(() => {
+      if (prefecture && selectedCity) {
+        const address = `${selectedCity}, ${prefecture}, 日本`;
+        loadCoordinates(address);
+      } else if (prefecture) {
+        const address = `${prefecture}, 日本`;
+        loadCoordinates(address);
+      }
+    }, [prefecture, selectedCity]);
   return (
     <div className="weather_app">
       <Search
