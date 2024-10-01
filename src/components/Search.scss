@@ -17,25 +17,25 @@
         background: #eee;
         background: -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
         background: linear-gradient(to bottom, #84bbe3 0%,#5f91c3 100%);
+        
         border-radius: 7px;
+        &.prefectures {
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            height: 50px;
+            width: 200px; 
+            margin: 10px;
+        }
 
-    }
-
-    .prefectures {
-        color:white;
-        font-weight: bold;
-        font-size: 1rem;
-        height: 50px;
-        width: 200px; 
-        margin: 10px;
-    }
-    .cities{
-        color:white;
-        font-weight: bold;
-        font-size: 1rem;
-        height: 50px;
-        width: 200px; 
-        margin: 10px;
+        &.cityList {
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            height: 50px;
+            width: 200px;
+            margin: 10px;
+        }
     }
 
 }

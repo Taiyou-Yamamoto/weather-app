@@ -2,11 +2,11 @@ import React from 'react';
 import './Search.css';
 
 const Search = ({
-  results,
+  prefecturesList,
   setPrefecture,
   setCity,
   prefecture,
-  cities,
+  cityList,
   selectedCity,
   setSelectedCity,
 }) => {
@@ -14,7 +14,7 @@ const Search = ({
     const prefectureName = e.target.value;
     setPrefecture(prefectureName);
 
-    const found = results.find((result) => result.prefName === prefectureName);
+    const found = prefecturesList.find((result) => result.prefName === prefectureName);
     setCity(found.prefCode);
     setSelectedCity('');
   };
@@ -35,8 +35,8 @@ const Search = ({
           <option value="" disabled>
             都道府県を選択
           </option>
-          {results.length > 0 ? (
-            results.map((result) => {
+          {prefecturesList.length > 0 ? (
+            prefecturesList.map((result) => {
               return (
                 <option key={result.prefCode} value={result.prefName}>
                   {result.prefName}
@@ -49,15 +49,15 @@ const Search = ({
         </select>
 
         <select
-          className="cities"
+          className="cityList"
           value={selectedCity}
           onChange={changeSelectedCity}
         >
           <option value="" disabled>
             市町村を選択
           </option>
-          {cities.length > 0 ? (
-            cities.map((result) => {
+          {cityList.length > 0 ? (
+            cityList.map((result) => {
               return (
                 <option key={result.cityCode} value={result.cityName}>
                   {result.cityName}
